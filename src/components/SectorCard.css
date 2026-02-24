@@ -1,16 +1,18 @@
 .sector-card {
   background: var(--neutral-0);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--gray-200);
   padding: 20px;
   margin-bottom: 16px;
-  transition: all 0.25s ease;
+  transition: box-shadow var(--transition-normal), border-color var(--transition-normal), transform var(--transition-normal);
   animation: fadeSlideIn 0.4s ease both;
+  box-shadow: var(--shadow-card);
 }
 
 .sector-card:hover {
   border-color: var(--gray-300);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
 }
 
 .sector-header {
@@ -135,9 +137,14 @@
   gap: 12px;
   padding: 14px 16px;
   background-color: var(--card-bg);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--card-border);
-  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.02);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.metric-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .metric-icon {
@@ -452,7 +459,7 @@
   font-size: 12px;
   color: var(--gray-800);
   align-items: center;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--gray-100);
 }
 
 .interpretation-row:last-child {
