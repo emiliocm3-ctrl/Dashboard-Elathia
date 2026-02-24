@@ -1,0 +1,5 @@
+*.backup
+*.pdf
+backend/
+old-backup-20260119/
+node_modules/
