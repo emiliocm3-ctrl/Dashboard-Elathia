@@ -3,6 +3,8 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const config = require('./config');
 const dashboardRoutes = require('./routes/dashboard');
+const agentRoutes = require('./routes/agent');
+const notificationRoutes = require('./routes/notifications');
 
 const app = express();
 
@@ -19,17 +21,19 @@ const apiLimiter = rateLimit({
 
 app.use('/api', apiLimiter);
 app.use('/api', dashboardRoutes);
+app.use('/api/agent', agentRoutes);
+app.use('/api/notifications', notificationRoutes);
 
-// Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Start server
 const PORT = config.server.port;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`API available at http://localhost:${PORT}/api`);
+  console.log(`Agent API at http://localhost:${PORT}/api/agent`);
+  console.log(`Notifications API at http://localhost:${PORT}/api/notifications`);
 });
 
 module.exports = app;

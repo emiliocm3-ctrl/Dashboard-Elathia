@@ -1,0 +1,152 @@
+{
+  "nav": {
+    "home": "Home",
+    "alerts": "Alerts",
+    "profile": "Profile",
+    "logout": "Log out",
+    "menu": "Menu",
+    "back": "Back"
+  },
+  "greeting": {
+    "hello": "Hello",
+    "defaultUser": "Farmer"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "adminTitle": "Admin Panel",
+    "ranches": "Ranches",
+    "sectors": "Sectors",
+    "devices": "Devices",
+    "noData": "No data available",
+    "loading": "Loading...",
+    "error": "Error loading data",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "lastUpdate": "Last update",
+    "selectRanch": "Select a ranch",
+    "selectSector": "Select a sector",
+    "allTenants": "All clients",
+    "filterByTenant": "Filter by client"
+  },
+  "hero": {
+    "healthSummary": "Health summary",
+    "avgTemp": "Avg. temperature",
+    "avgHumidity": "Avg. humidity",
+    "waterStatus": "Water status",
+    "activeAlerts": "Active alerts",
+    "totalDevices": "Devices",
+    "totalSectors": "Sectors",
+    "totalRanches": "Ranches",
+    "healthy": "Healthy",
+    "needsAttention": "Needs attention",
+    "critical": "Critical"
+  },
+  "metrics": {
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "soilMoisture": "Soil moisture",
+    "soilTemp": "Soil temp.",
+    "conductivity": "Conductivity",
+    "battery": "Battery",
+    "radiation": "Radiation",
+    "ph": "pH",
+    "vpd": "Atmospheric demand",
+    "waterAvailable": "Available water"
+  },
+  "units": {
+    "celsius": "°C",
+    "percent": "%",
+    "mscm": "mS/cm",
+    "volts": "V",
+    "wm2": "W/m²"
+  },
+  "status": {
+    "ok": "Normal",
+    "warning": "Warning",
+    "critical": "Critical",
+    "optimal": "Optimal",
+    "high": "High",
+    "low": "Low",
+    "veryHigh": "Very high",
+    "veryLow": "Very low",
+    "unknown": "Unknown"
+  },
+  "stages": {
+    "germinacion": "Germination",
+    "crecimiento": "Growth",
+    "floracion": "Flowering",
+    "fructificacion": "Fruiting",
+    "maduracion": "Ripening"
+  },
+  "water": {
+    "full": "Full",
+    "good": "Good",
+    "low": "Low",
+    "dry": "Dry",
+    "level": "Water level"
+  },
+  "alerts": {
+    "title": "Alerts",
+    "recent": "Recent alerts",
+    "noAlerts": "No active alerts",
+    "warning": "Warning",
+    "critical": "Critical",
+    "tempHigh": "High temperature",
+    "tempLow": "Low temperature",
+    "humidityHigh": "High humidity",
+    "humidityLow": "Low humidity",
+    "soilDry": "Dry soil",
+    "soilWet": "Saturated soil"
+  },
+  "insights": {
+    "title": "Smart analysis",
+    "loading": "Analyzing data...",
+    "noInsights": "No additional information",
+    "action": "Suggested action"
+  },
+  "notifications": {
+    "title": "Notification preferences",
+    "channels": "Alert channels",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "calls": "Phone calls",
+    "severity": "Minimum severity",
+    "reports": "Periodic reports",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "quietHours": "Quiet hours",
+    "save": "Save",
+    "saved": "Saved"
+  },
+  "chart": {
+    "timeRange": "Time range",
+    "8h": "8 hours",
+    "24h": "24 hours",
+    "7d": "7 days",
+    "30d": "30 days",
+    "optimalRange": "Optimal range",
+    "noData": "No data to chart"
+  },
+  "transpiration": {
+    "title": "Transpiration windows",
+    "hour": "Hour",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "optimal": "Optimal",
+    "stressed": "Stressed"
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo": "{{count}} h ago",
+    "daysAgo": "{{count}} d ago",
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "trend": {
+    "up": "Rising",
+    "down": "Falling",
+    "stable": "Stable"
+  }
+}

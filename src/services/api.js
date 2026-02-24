@@ -1,171 +1,111 @@
+import { mockApi } from "./mockData";
+
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
+const USE_MOCKS = process.env.REACT_APP_USE_MOCKS === "true";
+
+let backendAvailable = null;
+
+async function checkBackend() {
+  if (USE_MOCKS) return false;
+  if (backendAvailable !== null) return backendAvailable;
+  try {
+    const res = await fetch(`${API_URL.replace("/api", "")}/health`, {
+      signal: AbortSignal.timeout(3000),
+    });
+    backendAvailable = res.ok;
+  } catch {
+    backendAvailable = false;
+  }
+  return backendAvailable;
+}
+
+async function fetchOrMock(apiCall, mockCall) {
+  const live = await checkBackend();
+  if (!live) return mockCall();
+  return apiCall();
+}
+
+async function fetchJSON(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
 
 export const api = {
-  // Get all dashboard data for a tenant
   async getDashboard(tenantId = 1) {
-    try {
-      const response = await fetch(`${API_URL}/dashboard/${tenantId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch dashboard data");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching dashboard:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/dashboard/${tenantId}`),
+      () => mockApi.getDashboard(tenantId)
+    );
   },
 
-  // Get all ranches for a tenant
   async getRanches(tenantId = 1) {
-    try {
-      const response = await fetch(`${API_URL}/ranches/${tenantId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch ranches");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching ranches:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/ranches/${tenantId}`),
+      () => mockApi.getRanches(tenantId)
+    );
   },
 
-  // Get all tenants (admin)
   async getTenants() {
-    try {
-      const response = await fetch(`${API_URL}/tenants`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch tenants");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching tenants:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/tenants`),
+      () => mockApi.getTenants()
+    );
   },
 
-  // Get sectors for a ranch
   async getSectors(ranchId) {
-    try {
-      const response = await fetch(`${API_URL}/sectors/${ranchId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch sectors");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching sectors:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/sectors/${ranchId}`),
+      () => mockApi.getSectors(ranchId)
+    );
   },
 
-  // Get readings for a ranch
   async getReadings(ranchId) {
-    try {
-      const response = await fetch(`${API_URL}/readings/ranch/${ranchId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch readings");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching readings:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/readings/ranch/${ranchId}`),
+      () => mockApi.getReadings(ranchId)
+    );
   },
 
-  // Get dashboard summary
   async getSummary(tenantId = 1) {
-    try {
-      const response = await fetch(`${API_URL}/summary/${tenantId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch summary");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching summary:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/summary/${tenantId}`),
+      () => mockApi.getSummary(tenantId)
+    );
   },
 
-  // Admin overview (all tenants, ranches, sectors)
   async getAdminOverview() {
-    try {
-      const response = await fetch(`${API_URL}/admin/overview`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch admin overview");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching admin overview:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/admin/overview`),
+      () => mockApi.getAdminOverview()
+    );
   },
 
-  // Admin: latest device readings for a sector
   async getAdminSectorDevices(sectorId) {
-    try {
-      const response = await fetch(
-        `${API_URL}/admin/sectors/${encodeURIComponent(sectorId)}/devices`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch sector devices");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching sector devices:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/admin/sectors/${encodeURIComponent(sectorId)}/devices`),
+      () => mockApi.getAdminSectorDevices(sectorId)
+    );
   },
 
-  // Admin: readings for a device within a time range
   async getAdminDeviceReadings(deviceId, range = "24h") {
-    try {
-      const response = await fetch(
-        `${API_URL}/admin/devices/${encodeURIComponent(
-          deviceId
-        )}/readings?range=${range}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch device readings");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching device readings:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/admin/devices/${encodeURIComponent(deviceId)}/readings?range=${range}`),
+      () => mockApi.getAdminDeviceReadings(deviceId, range)
+    );
   },
 
-  // Admin: readings for all devices in a sector within a time range
   async getAdminSectorReadings(sectorId, range = "24h") {
-    try {
-      const response = await fetch(
-        `${API_URL}/admin/sectors/${encodeURIComponent(
-          sectorId
-        )}/readings?range=${range}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch sector readings");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching sector readings:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/admin/sectors/${encodeURIComponent(sectorId)}/readings?range=${range}`),
+      () => mockApi.getAdminSectorReadings(sectorId, range)
+    );
   },
 
-  // Transpiration efficiency series for a sector
   async getTranspirationEfficiency(sectorId, range = "60d") {
-    try {
-      const response = await fetch(
-        `${API_URL}/transpiration-efficiency/${encodeURIComponent(
-          sectorId
-        )}?range=${range}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch transpiration efficiency");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching transpiration efficiency:", error);
-      throw error;
-    }
+    return fetchOrMock(
+      () => fetchJSON(`${API_URL}/transpiration-efficiency/${encodeURIComponent(sectorId)}?range=${range}`),
+      () => mockApi.getTranspirationEfficiency(sectorId, range)
+    );
   },
 };

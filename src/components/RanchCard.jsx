@@ -82,32 +82,20 @@ export default function RanchCard({ ranch, onViewRanch }) {
 
       <div className="ranch-etapas">
         <h4>Etapas Fenológicas</h4>
-        <div className="etapas-grid">
-          {etapasWithCounts.map((etapa) => {
-            const isActive = etapa.count > 0;
-
-            return (
-              <div
-                key={etapa.id}
-                className={`etapa-item ${
-                  isActive ? "etapa-item--active" : "etapa-item--inactive"
-                }`}
-              >
-                <div className="etapa-indicator">
-                  <div
-                    className={`etapa-dot ${
-                      isActive ? "etapa-dot--active" : ""
-                    }`}
-                    style={{ backgroundColor: isActive ? etapa.color : undefined }}
-                  />
-                </div>
-                <div className="etapa-info">
-                  <span className="etapa-name">{etapa.name}</span>
-                  <span className="etapa-count">{etapa.count} sectores</span>
-                </div>
-              </div>
-            );
-          })}
+        <div className="etapas-inline">
+          {etapasWithCounts.filter((e) => e.count > 0).map((etapa) => (
+            <span
+              key={etapa.id}
+              className="etapa-pill"
+              style={{ borderColor: etapa.color, color: etapa.color }}
+            >
+              <span className="etapa-pill__dot" style={{ backgroundColor: etapa.color }} />
+              {etapa.short} ({etapa.count})
+            </span>
+          ))}
+          {etapasWithCounts.filter((e) => e.count > 0).length === 0 && (
+            <span className="etapa-pill etapa-pill--empty">Sin etapas activas</span>
+          )}
         </div>
       </div>
 

@@ -3,6 +3,7 @@ import { ASSETS } from "../config/assets";
 import { ETAPAS_FENOLOGICAS } from "../config/constants";
 import { formatValue, parseNumber, getMetricStatus } from "../utils/formatters";
 import SummaryBlock from "./SummaryBlock";
+import CollapsibleSection from "./shared/CollapsibleSection";
 import "./SectorCard.css";
 
 const buildLinePath = (values, width, height, min, max) => {
@@ -158,8 +159,6 @@ export default function SectorCard({
     const tempStatus = getMetricStatus("temperature", sector.air_temperature);
     const humStatus = getMetricStatus("humidity", sector.relative_humidity);
     const condStatus = getMetricStatus("conductivity", sector.soil_conductivity);
-    const radStatus = getMetricStatus("radiation", sector.soil_temperature);
-    const phStatus = getMetricStatus("ph", sector.soil_humidity);
     const metrics = {
         temperature: {
             value: formatValue(sector.air_temperature),
@@ -175,16 +174,6 @@ export default function SectorCard({
             value: formatValue(sector.soil_conductivity),
             unit: "mS/cm",
             ...condStatus,
-        },
-        radiation: {
-            value: formatValue(sector.soil_temperature),
-            unit: "°C",
-            ...radStatus,
-        },
-        ph: {
-            value: formatValue(sector.soil_humidity, 0),
-            unit: "%",
-            ...phStatus,
         },
     };
 
@@ -331,31 +320,15 @@ export default function SectorCard({
                     statusText={metrics.conductivity.statusText}
                     status={metrics.conductivity.status}
                 />
-                <div className="divider" />
-                <SummaryBlock
-                    metricType="radiation"
-                    value={metrics.radiation.value}
-                    unit={metrics.radiation.unit}
-                    statusText={metrics.radiation.statusText}
-                    status={metrics.radiation.status}
-                />
-                <div className="divider" />
-                <SummaryBlock
-                    metricType="ph"
-                    value={metrics.ph.value}
-                    unit={metrics.ph.unit}
-                    statusText={metrics.ph.statusText}
-                    status={metrics.ph.status}
-                />
             </div>
 
+            <CollapsibleSection title="Eficiencia de transpiración (detalle)">
             <div className="sector-transpiration">
                 <div className="transpiration-header">
-                    <h4>Eficiencia de transpiración</h4>
                     <div className="transpiration-legend">
-                        <span className="legend-item legend-item--blue">f_vpd</span>
+                        <span className="legend-item legend-item--blue">Demanda atmosférica</span>
                         <span className="legend-item legend-item--orange">
-                            theta disponible
+                            Agua disponible
                         </span>
                     </div>
                 </div>
@@ -457,8 +430,8 @@ export default function SectorCard({
                         <div className="interpretation-table">
                             <div className="interpretation-row interpretation-row--head">
                                 <span>Ventana</span>
-                                <span>f_vpd máx</span>
-                                <span>θ_disp prom</span>
+                                <span>Demanda máx</span>
+                                <span>Agua prom</span>
                                 <span>Estado</span>
                             </div>
                             {transpirationWindows.map((window) => (
@@ -502,21 +475,13 @@ export default function SectorCard({
                         <div className="transpiration-empty">Sin ventanas activas</div>
                     )}
                     <div className="interpretation-legend">
-                        <p>
-                            Si θ_disp = 1.0 → El vaso está lleno hasta FC. 100% del agua útil
-                            disponible.
-                        </p>
-                        <p>
-                            Si θ_disp = 0.5 → Queda la mitad del agua útil. La planta aún está
-                            bien.
-                        </p>
-                        <p>
-                            Si θ_disp = 0.0 → Se acabó el agua útil. Estamos en WP. La planta
-                            se marchita.
-                        </p>
+                        <p>1.0 = Agua llena (capacidad de campo). La planta tiene todo lo que necesita.</p>
+                        <p>0.5 = Mitad del agua útil. Sin problemas por ahora.</p>
+                        <p>0.0 = Sin agua disponible. La planta se marchita.</p>
                     </div>
                 </div>
             </div>
+            </CollapsibleSection>
 
             <div className="sector-status">
                 <div className="status-item">

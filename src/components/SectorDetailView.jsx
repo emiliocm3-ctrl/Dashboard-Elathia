@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ASSETS } from "../config/assets";
 import { formatValue, getMetricStatus } from "../utils/formatters";
 import SensorDropdown from "./SensorDropdown";
@@ -19,17 +20,10 @@ export default function SectorDetailView({
   onChangeDeviceRange,
   isAdmin = false,
 }) {
+  const { t } = useTranslation();
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedZoneName, setEditedZoneName] = useState(zoneName);
-  const [lastUpdate] = useState(
-    new Date().toLocaleString("es-ES", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-  );
+  const [lastUpdate] = useState(new Date().toLocaleString());
 
   const sensors = devices.map((device) => ({
     id: device.device_id,
@@ -39,40 +33,14 @@ export default function SectorDetailView({
   const tempStatus = getMetricStatus("temperature", sectorData?.air_temperature);
   const humStatus = getMetricStatus("humidity", sectorData?.relative_humidity);
   const condStatus = getMetricStatus("conductivity", sectorData?.soil_conductivity);
-  const radStatus = getMetricStatus("radiation", sectorData?.soil_temperature);
-  const phStatus = getMetricStatus("ph", sectorData?.soil_humidity);
   const metrics = {
-    temperature: {
-      value: formatValue(sectorData?.air_temperature),
-      unit: "°C",
-      ...tempStatus,
-    },
-    humidity: {
-      value: formatValue(sectorData?.relative_humidity, 0),
-      unit: "%",
-      ...humStatus,
-    },
-    conductivity: {
-      value: formatValue(sectorData?.soil_conductivity),
-      unit: "mS/cm",
-      ...condStatus,
-    },
-    radiation: {
-      value: formatValue(sectorData?.soil_temperature),
-      unit: "°C",
-      ...radStatus,
-    },
-    ph: {
-      value: formatValue(sectorData?.soil_humidity, 0),
-      unit: "%",
-      ...phStatus,
-    },
+    temperature: { value: formatValue(sectorData?.air_temperature), unit: t('units.celsius'), ...tempStatus },
+    humidity: { value: formatValue(sectorData?.relative_humidity, 0), unit: t('units.percent'), ...humStatus },
+    conductivity: { value: formatValue(sectorData?.soil_conductivity), unit: t('units.mscm'), ...condStatus },
   };
 
   const activeDeviceId = selectedDevice || sensors[0]?.id;
-  const activeReadings = activeDeviceId
-    ? deviceReadings[activeDeviceId] || []
-    : [];
+  const activeReadings = activeDeviceId ? deviceReadings[activeDeviceId] || [] : [];
   const buildSeries = (key) =>
     activeReadings.map((reading) => ({
       x: reading.timestamp_converted,
@@ -81,20 +49,13 @@ export default function SectorDetailView({
 
   const displayTitle = selectedDevice
     ? sensors.find((s) => s.id === selectedDevice)?.name
-    : "Total de Sensores";
+    : t('dashboard.devices');
 
-  const handleEditName = () => {
-    setIsEditingName(true);
-  };
-
-  const handleSaveName = () => {
-    setIsEditingName(false);
-  };
+  const handleSaveName = () => setIsEditingName(false);
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSaveName();
-    } else if (e.key === "Escape") {
+    if (e.key === "Enter") handleSaveName();
+    else if (e.key === "Escape") {
       setEditedZoneName(zoneName);
       setIsEditingName(false);
     }
@@ -118,42 +79,27 @@ export default function SectorDetailView({
             ) : (
               <h1>{editedZoneName}</h1>
             )}
-            <button
-              className="icon-btn"
-              type="button"
-              onClick={handleEditName}
-              aria-label="Editar nombre de zona"
-            >
+            <button className="icon-btn" type="button" onClick={() => setIsEditingName(true)}>
               <img src={ASSETS.icons.edit} alt="" />
             </button>
             <span className="sector-subtitle">- {displayTitle}</span>
           </div>
-          <p>
-            Monitoreo tiempo real de {sectorName} • Última actualización:{" "}
-            {lastUpdate}
-          </p>
+          <p>{sectorName} • {t('dashboard.lastUpdate')}: {lastUpdate}</p>
         </div>
         <div className="header-actions">
           <button className="btn-outline" type="button" onClick={onBack}>
-            <span className="icon-24 rotate-90">
-              <img src={ASSETS.icons.chevron} alt="" />
-            </span>
-            Volver a Sectores
+            <span className="icon-24 rotate-90"><img src={ASSETS.icons.chevron} alt="" /></span>
+            {t('nav.back')}
           </button>
           <SensorDropdown
             sensors={sensors}
             selectedSensor={selectedDevice}
             onChange={(id) => onSelectDevice && onSelectDevice(id)}
-            placeholder={
-              isAdmin ? "-- Selecciona Sensor --" : "-- Total de Sensores --"
-            }
+            placeholder={isAdmin ? `-- ${t('dashboard.selectSector')} --` : `-- ${t('dashboard.devices')} --`}
           />
-          {null}
           <button className="btn-outline" type="button" onClick={onRefresh}>
-            <span className="icon-24">
-              <img src={ASSETS.icons.refresh} alt="" />
-            </span>
-            Actualizar Datos
+            <span className="icon-24"><img src={ASSETS.icons.refresh} alt="" /></span>
+            {t('dashboard.refresh')}
           </button>
         </div>
       </section>
@@ -182,51 +128,40 @@ export default function SectorDetailView({
           statusText={metrics.conductivity.statusText}
           status={metrics.conductivity.status}
         />
-        <div className="divider" />
-        <SummaryBlock
-          metricType="radiation"
-          value={metrics.radiation.value}
-          unit={metrics.radiation.unit}
-          statusText={metrics.radiation.statusText}
-          status={metrics.radiation.status}
-        />
-        <div className="divider" />
-        <SummaryBlock
-          metricType="ph"
-          value={metrics.ph.value}
-          unit={metrics.ph.unit}
-          statusText={metrics.ph.statusText}
-          status={metrics.ph.status}
-        />
       </section>
 
       <section className="chart-grid">
         <ChartCard
-          title="Temperatura"
+          title={t('metrics.temperature')}
+          metricType="temperature"
           timeRange={deviceRange}
-          chartLines={[
-            ASSETS.charts.lineA,
-            ASSETS.charts.lineB,
-            ASSETS.charts.lineC,
-          ]}
           series={buildSeries("air_temperature")}
-          unit="°C"
+          unit={t('units.celsius')}
+          optimalMin={20}
+          optimalMax={40}
+          color="#ef4444"
           onRangeChange={onChangeDeviceRange}
         />
         <ChartCard
-          title="Humedad"
+          title={t('metrics.humidity')}
+          metricType="humidity"
           timeRange={deviceRange}
-          chartLines={[ASSETS.charts.lineD]}
           series={buildSeries("relative_humidity")}
-          unit="%"
+          unit={t('units.percent')}
+          optimalMin={70}
+          optimalMax={80}
+          color="#3b82f6"
           onRangeChange={onChangeDeviceRange}
         />
         <ChartCard
-          title="Conductividad"
+          title={t('metrics.conductivity')}
+          metricType="conductivity"
           timeRange={deviceRange}
-          chartLines={[ASSETS.charts.lineC]}
           series={buildSeries("soil_conductivity")}
-          unit="mS/cm"
+          unit={t('units.mscm')}
+          optimalMin={1}
+          optimalMax={3}
+          color="#4cb3a0"
           onRangeChange={onChangeDeviceRange}
         />
       </section>

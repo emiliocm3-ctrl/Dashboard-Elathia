@@ -4,12 +4,13 @@
   border: 1px solid var(--gray-200);
   padding: 20px;
   margin-bottom: 16px;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  animation: fadeSlideIn 0.4s ease both;
 }
 
 .sector-card:hover {
   border-color: var(--gray-300);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
 .sector-header {
@@ -376,9 +377,16 @@
 }
 
 .heatmap-cell {
-  height: 14px;
+  height: 18px;
   border-radius: 4px;
   background: var(--gray-300);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+.heatmap-cell:hover {
+  transform: scaleY(1.4);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 1;
 }
 
 .heatmap-cell--ok {

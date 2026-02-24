@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 const config = require('./config');
 
-const pool = new Pool({
+const poolConfig = {
   host: config.database.host,
   port: config.database.port,
   database: config.database.database,
@@ -9,12 +9,21 @@ const pool = new Pool({
   password: config.database.password,
   max: 20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-});
+  connectionTimeoutMillis: 5000,
+};
+
+if (config.database.ssl) {
+  poolConfig.ssl = config.database.ssl;
+}
+
+const pool = new Pool(poolConfig);
 
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
-  process.exit(-1);
+});
+
+pool.on('connect', () => {
+  console.log('[DB] New client connected');
 });
 
 module.exports = pool;
