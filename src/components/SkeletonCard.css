@@ -1,0 +1,126 @@
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.skeleton-card {
+  background: var(--neutral-0);
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  padding: 20px;
+  margin-bottom: 16px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.skeleton-line {
+  background: var(--gray-200);
+  border-radius: 4px;
+  height: 12px;
+}
+
+.skeleton-line--title {
+  width: 140px;
+  height: 18px;
+  margin-bottom: 8px;
+}
+
+.skeleton-line--subtitle {
+  width: 100px;
+}
+
+.skeleton-line--medium {
+  width: 120px;
+  flex: 1;
+}
+
+.skeleton-line--short {
+  width: 80px;
+}
+
+.skeleton-line--value {
+  width: 60px;
+  height: 24px;
+  margin-top: 4px;
+}
+
+.skeleton-line--badge {
+  width: 90px;
+  height: 20px;
+  border-radius: 999px;
+  margin-top: 4px;
+}
+
+.skeleton-circle {
+  background: var(--gray-200);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-circle--xs {
+  width: 8px;
+  height: 8px;
+}
+
+.skeleton-circle--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.skeleton-circle--md {
+  width: 30px;
+  height: 30px;
+}
+
+.skeleton-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--gray-50);
+  border-radius: 6px;
+}
+
+.skeleton-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--gray-100);
+}
+
+.skeleton-metrics {
+  margin-bottom: 16px;
+}
+
+.skeleton-metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.skeleton-metric-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--gray-50);
+  border-radius: 10px;
+  border: 1px solid var(--gray-200);
+}
+
+.skeleton-metric-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}

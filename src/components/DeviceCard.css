@@ -1,0 +1,167 @@
+.device-card {
+  width: 100%;
+  text-align: left;
+  background: var(--neutral-0);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.device-card:hover {
+  border-color: #cbd5f5;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+}
+
+.device-card--active {
+  border-color: var(--blue-500);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.18);
+}
+
+.device-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.device-card-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.device-card-header span {
+  font-size: 11px;
+  color: var(--gray-500);
+}
+
+.device-status {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #ecfdf3;
+  color: #1f7a45;
+}
+
+.device-card-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.device-card-metrics span {
+  display: block;
+  font-size: 11px;
+  color: var(--slate-500);
+}
+
+.device-card-metrics strong {
+  font-size: 13px;
+  color: var(--slate-900);
+}
+
+.device-card-graphs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.device-mini-chart {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.device-mini-chart--temp {
+  border-color: rgba(249, 115, 22, 0.25);
+  background: rgba(255, 237, 213, 0.45);
+}
+
+.device-mini-chart--hum {
+  border-color: rgba(59, 130, 246, 0.25);
+  background: rgba(219, 234, 254, 0.45);
+}
+
+.mini-chart-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.mini-chart-header span {
+  display: block;
+  font-size: 11px;
+  color: var(--slate-500);
+}
+
+.mini-chart-header strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--slate-900);
+}
+
+.mini-chart-range {
+  display: grid;
+  gap: 2px;
+  font-size: 10px;
+  color: var(--slate-500);
+  text-align: right;
+}
+
+.mini-chart-canvas {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.4)
+  );
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.mini-chart-canvas svg {
+  width: 100%;
+  height: 64px;
+}
+
+.mini-chart-line {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.device-mini-chart--temp .mini-chart-line {
+  stroke: var(--orange-500);
+}
+
+.device-mini-chart--hum .mini-chart-line {
+  stroke: var(--blue-600);
+}
+
+.mini-chart-area {
+  opacity: 0.25;
+}
+
+.device-mini-chart--temp .mini-chart-area {
+  fill: #fdba74;
+}
+
+.device-mini-chart--hum .mini-chart-area {
+  fill: #93c5fd;
+}
+
+@media (max-width: 900px) {
+  .device-card-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .device-card-graphs {
+    grid-template-columns: 1fr;
+  }
+}

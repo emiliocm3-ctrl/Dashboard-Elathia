@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.figma.com)",
+      "WebFetch(domain:developers.figma.com)",
+      "Bash(find:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}
