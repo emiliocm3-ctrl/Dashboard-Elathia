@@ -160,7 +160,7 @@ export default function DashboardGeneral() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   return (

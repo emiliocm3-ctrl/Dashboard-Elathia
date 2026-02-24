@@ -90,3 +90,4 @@ npm-debug.log
 .turbo
 .next
 out
+.vercel
