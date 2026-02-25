@@ -20,7 +20,7 @@ function formatAxisTime(timestamp, range) {
   return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 }
 
-function CustomTooltip({ active, payload, label, unit }) {
+function CustomTooltip({ active, payload, label, unit, title }) {
   if (!active || !payload?.length) return null;
   const d = new Date(label);
   const timeStr = d.toLocaleString(undefined, {
@@ -32,11 +32,10 @@ function CustomTooltip({ active, payload, label, unit }) {
       border: '1px solid #e5e7eb',
       borderRadius: 10,
       padding: '10px 14px',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.04), 0 8px 20px rgba(0,0,0,0.08)',
+      boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
       fontSize: 13,
-      lineHeight: 1.5,
     }}>
-      <div style={{ color: '#6b7280', marginBottom: 4, fontWeight: 500, fontSize: 12 }}>{timeStr}</div>
+      <div style={{ color: '#6b7280', marginBottom: 4, fontWeight: 500 }}>{timeStr}</div>
       {payload.map((p, i) => (
         <div key={i} style={{ color: p.color, fontWeight: 600 }}>
           {p.name}: {Number(p.value).toFixed(1)} {unit}
@@ -126,16 +125,15 @@ export default function ChartCard({
                 if (onRangeChange) onRangeChange(r);
               }}
               style={{
-                padding: '5px 12px',
+                padding: '4px 10px',
                 borderRadius: 6,
-                border: selectedRange === r ? 'none' : '1px solid #e5e7eb',
+                border: 'none',
                 fontSize: 12,
                 fontWeight: 600,
                 cursor: 'pointer',
-                background: selectedRange === r ? '#1f4c7a' : '#fff',
+                background: selectedRange === r ? '#1f4c7a' : '#f3f4f6',
                 color: selectedRange === r ? '#fff' : '#6b7280',
                 transition: 'all 150ms ease',
-                letterSpacing: '0.01em',
               }}
             >
               {r}
@@ -170,7 +168,7 @@ export default function ChartCard({
                 </linearGradient>
               )}
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" vertical={false} />
             <XAxis
               dataKey="time"
               type="number"

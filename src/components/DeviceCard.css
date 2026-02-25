@@ -3,23 +3,21 @@
   text-align: left;
   background: var(--neutral-0);
   border: 1px solid var(--gray-200);
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   padding: 16px;
   display: grid;
   gap: 12px;
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
-  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .device-card:hover {
-  border-color: var(--gray-300);
-  box-shadow: var(--shadow-card-hover);
-  transform: translateY(-1px);
+  border-color: #cbd5f5;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
 }
 
 .device-card--active {
-  border-color: var(--primary-500);
-  box-shadow: 0 4px 16px rgba(51, 127, 204, 0.15);
+  border-color: var(--blue-500);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.18);
 }
 
 .device-card-header {
@@ -39,16 +37,14 @@
 .device-card-header span {
   font-size: 11px;
   color: var(--gray-500);
-  font-weight: 500;
 }
 
 .device-status {
   font-size: 11px;
   padding: 4px 8px;
   border-radius: 999px;
-  background: #d1fae5;
-  color: #065f46;
-  font-weight: 600;
+  background: #ecfdf3;
+  color: #1f7a45;
 }
 
 .device-card-metrics {
@@ -60,13 +56,12 @@
 .device-card-metrics span {
   display: block;
   font-size: 11px;
-  color: var(--gray-500);
-  font-weight: 500;
+  color: var(--slate-500);
 }
 
 .device-card-metrics strong {
   font-size: 13px;
-  color: var(--gray-900);
+  color: var(--slate-900);
 }
 
 .device-card-graphs {
@@ -76,23 +71,22 @@
 }
 
 .device-mini-chart {
-  background: var(--gray-50);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-sm);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
   padding: 10px 12px;
   display: grid;
   gap: 8px;
-  transition: border-color var(--transition-fast);
 }
 
 .device-mini-chart--temp {
-  border-color: rgba(249, 115, 22, 0.2);
-  background: linear-gradient(135deg, rgba(255, 237, 213, 0.5), var(--neutral-0) 80%);
+  border-color: rgba(249, 115, 22, 0.25);
+  background: rgba(255, 237, 213, 0.45);
 }
 
 .device-mini-chart--hum {
-  border-color: rgba(59, 130, 246, 0.2);
-  background: linear-gradient(135deg, rgba(219, 234, 254, 0.5), var(--neutral-0) 80%);
+  border-color: rgba(59, 130, 246, 0.25);
+  background: rgba(219, 234, 254, 0.45);
 }
 
 .mini-chart-header {
@@ -105,25 +99,22 @@
 .mini-chart-header span {
   display: block;
   font-size: 11px;
-  color: var(--gray-500);
-  font-weight: 500;
+  color: var(--slate-500);
 }
 
 .mini-chart-header strong {
   display: block;
   font-size: 16px;
-  font-weight: 700;
-  color: var(--gray-900);
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--slate-900);
 }
 
 .mini-chart-range {
   display: grid;
   gap: 2px;
   font-size: 10px;
-  color: var(--gray-500);
+  color: var(--slate-500);
   text-align: right;
-  font-weight: 500;
 }
 
 .mini-chart-canvas {
@@ -132,7 +123,7 @@
     rgba(255, 255, 255, 0.9),
     rgba(255, 255, 255, 0.4)
   );
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   padding: 6px;
 }
 
